@@ -28,6 +28,6 @@
         state: started
         enabled: true
    - name: deploy war-test image
-     command: sudo docker rm $(docker ps -a -q) -f
-     command: sudo docker rmi $(docker images -q)
+     command: sudo docker rm $(sudo docker ps -a -q) -f
+     command: sudo docker rmi $(sudo docker images -q)
      command: sudo docker run -it -d -p 8087:8080 pitchunath/casestudy:latest
