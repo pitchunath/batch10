@@ -28,4 +28,4 @@
         state: started
         enabled: true
    - name: deploy war-test image
-     command: sudo docker run -it -d -p 8087:8080 pitchunath/casestudy:latest
+     command: sudo docker run -it -d -p 8888:8080 pitchunath/casestudy:latest
