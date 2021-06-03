@@ -1,4 +1,3 @@
-FROM openjdk:8-jdk-alpine
-EXPOSE 8087
-COPY target/bootcamp-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM library/tomcat
+ADD target/addressbook.war /usr/local/tomcat/webapps
+CMD "catalina.sh" "run"
