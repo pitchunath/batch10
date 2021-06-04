@@ -3,15 +3,13 @@ pipeline {
     imagename = "pitchunath/casestudy"
     Image = ''
   }
-    
     agent any
     tools { 
         maven 'jenkinsmaven' 
         jdk 'jenkinsjava' 
         dockerTool 'docker'
     }
-    stages {
-        
+    stages {     
         stage ('Initialize') {
             steps {
                git 'https://github.com/pitchunath/batch10.git'
@@ -22,8 +20,7 @@ pipeline {
             
             steps {
                 script{
-                sh 'mvn clean test install'
-                 
+                sh 'mvn clean test install'           
                             }
             }
            
@@ -94,24 +91,12 @@ pipeline {
             
             steps {
                 script{
-            //ansiblePlaybook credentialsId: 'Ansible', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: 'installation.yml'
-              ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: 'installation.yml'
+                  ansiblePlaybook become: true, credentialsId: 'ansible', disableHostKeyChecking: true, installation: 'Ansible', inventory: '/etc/ansible/hosts', playbook: 'installation.yml'
                 }
             }
            
         }
-        
-        stage('Gmail'){
-	     steps
-	         {
-	     mail to: 'pitchunath123@gmail.com',subject: "Job ${JOB_NAME} (${BUILD_NUMBER}) ",body: "Hi Team, \n\n Please go to ${BUILD_URL} for more details and verify the cause for the build failure. "
-	     
-         }
-        
-    }  
-       
-    
-        
+             
     }
      post {  
          always {  
@@ -125,17 +110,9 @@ pipeline {
              echo 'This will run only if fails'  
            
 	     mail to: 'pitchunath123@gmail.com',subject: "ATTENTION Failure:Job ${JOB_NAME} (${BUILD_NUMBER}) ",body: "Hello, \n\n  ${BUILD_URL} click here to check the cause. "
-	     
-        
-            
+          
          }  
-         unstable {  
-             echo 'This will run only if the run was marked as unstable'  
-         }  
-         changed {  
-             echo 'This will run only if the state of the Pipeline has changed'  
-             echo 'For example, if the Pipeline was previously failing but is now successful'  
-         }  
+         
      }  
     
 }
